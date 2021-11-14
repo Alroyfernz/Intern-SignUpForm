@@ -39,7 +39,7 @@ const Main = () => {
           </div>
         </div>
         <div className="right_wrapper">
-          <div>
+          <div className="right_container">
             <div className="heading">
               <h1>Register to Webstar</h1>
             </div>
@@ -51,6 +51,7 @@ const Main = () => {
                 rightIcon={<MdArrowForward />}
                 colorScheme="teal"
                 variant="outline"
+                className="submit_btn"
               >
                 Call us
               </Button>
@@ -61,6 +62,7 @@ const Main = () => {
             </div>
             <div className="socials">
               <Button
+                className="submit_btn"
                 leftIcon={<FaFacebook />}
                 colorScheme="teal"
                 variant="outline"
