@@ -20,7 +20,7 @@ const Main = () => {
     address: "",
     pincode: 0,
   });
-  console.log(data.email);
+  const [cpassword, setCpassword] = useState("");
 
   return (
     <div className="Main">
@@ -63,11 +63,25 @@ const Main = () => {
                 <div className="name">
                   <div className="first_name">
                     <span>Name</span>
-                    <Input variant="filled" placeholder="Filled" />
+                    <Input
+                      variant="filled"
+                      placeholder="Filled"
+                      onChange={(e) => {
+                        data.firstName = e.target.value;
+                        setData(data);
+                      }}
+                    />
                   </div>
                   <div className="first_name">
                     <span>Name</span>
-                    <Input variant="filled" placeholder="Filled" />
+                    <Input
+                      variant="filled"
+                      placeholder="Filled"
+                      onChange={(e) => {
+                        data.lastName = e.target.value;
+                        setData(data);
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="cred">
@@ -79,7 +93,6 @@ const Main = () => {
                       onChange={(e) => {
                         data.email = e.target.value;
                         setData(data);
-                        console.log("edited");
                       }}
                     />
                   </div>
@@ -91,6 +104,10 @@ const Main = () => {
                         variant="filled"
                         type={show ? "text" : "password"}
                         placeholder="Enter password"
+                        onChange={(e) => {
+                          data.password = e.target.value;
+                          setData(data);
+                        }}
                       />
                       <InputRightElement width="4.5rem">
                         <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -107,6 +124,9 @@ const Main = () => {
                         variant="filled"
                         type={show ? "text" : "password"}
                         placeholder="Enter password"
+                        onChange={(e) => {
+                          setCpassword(e.target.value);
+                        }}
                       />
                       <InputRightElement width="4.5rem">
                         <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -124,6 +144,9 @@ const Main = () => {
                 colorScheme="teal"
                 variant="outline"
                 className="submit_btn"
+                onClick={() => {
+                  console.log(data);
+                }}
               >
                 Next
               </Button>
