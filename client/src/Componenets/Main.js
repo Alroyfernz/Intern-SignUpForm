@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-
+import { Link } from "react-router-dom";
 import { MdArrowForward } from "react-icons/md";
 import "./Main.css";
 
@@ -50,7 +50,7 @@ const Main = () => {
       <div className="right">
         <div className="title_right">
           <div className="existing">
-            Existing user?<a href="/"> login</a>
+            Existing user?<Link to="/login"> register</Link>
           </div>
         </div>
         <div className="right_wrapper">

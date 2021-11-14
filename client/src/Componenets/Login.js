@@ -1,5 +1,6 @@
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import "./Main.css";
@@ -39,7 +40,7 @@ const Login = () => {
       <div className="right">
         <div className="title_right">
           <div className="existing">
-            New to webstar?<a href="/"> register</a>
+            New to webstar?<Link to="/register"> register</Link>
           </div>
         </div>
         <div className="right_wrapper">
