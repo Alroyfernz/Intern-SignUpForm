@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FiArrowLeft } from "react-icons/fi";
 import { FaFacebook } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { Checkbox, CheckboxGroup, InputLeftAddon } from "@chakra-ui/react";
+import { Checkbox, InputLeftAddon } from "@chakra-ui/react";
 
 import {
   Button,
@@ -27,14 +27,9 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import Slide from "@material-ui/core/Slide";
 import "./Main.css";
 
 import axios from "axios";
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 const Main = () => {
   const [show, setShow] = React.useState(false);
@@ -45,7 +40,7 @@ const Main = () => {
   const [checkBox, setCheckBox] = useState(false);
   const finalRef = React.useRef();
   const checkRef = React.useRef(null);
-
+  console.log(checkBox);
   const navigate = useNavigate();
   const [data, setData] = useState({
     firstName: "",
@@ -60,15 +55,16 @@ const Main = () => {
   var [pincode, setPincode] = useState("");
 
   const [cpassword, setCpassword] = useState("");
-  const [open, setOpen] = useState(false);
+  // const onj = useState(false);
+  // const setOpen=onj[1];
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
   const handleRegitser = async (e) => {
     e?.preventDefault();
@@ -201,9 +197,7 @@ const Main = () => {
                         <div>
                           <div className="name">
                             <div className="first_name">
-                              <span className="HideS" className="HideS">
-                                Name
-                              </span>
+                              <span className="HideS">Name</span>
                               <Input
                                 variant="filled"
                                 placeholder="Filled"

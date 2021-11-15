@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const userSchema = require("../Models/User");
-
+const bcrypt = require("bcrypt");
 router.post("/register", async (req, res) => {
   try {
     const newUser = new userSchema(req.body);
@@ -16,10 +16,18 @@ router.get("/login", async (req, res) => {
   try {
     const fetchedUSer = await userSchema.findOne({
       email: req.body.email,
-      phoneNumber: req.body.phoneNumber,
     });
-    !fetchedUSer && res.status(500).json("You are not registered");
-    res.status(200).json(fetchedUSer);
+    // !fetchedUSer && res.status(500).json("You are not registered");
+    const valide = await bcrypt.compare(
+      req.body.password,
+      fetchedUSer.password
+    );
+    console.log(valide);
+    if (valide === false) {
+      res.status(404).send("wrong password");
+    } else {
+      res.status(200).json(fetchedUSer);
+    }
   } catch (error) {
     res.status(500).json("Error while registering");
   }

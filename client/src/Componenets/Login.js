@@ -25,7 +25,9 @@ const Login = () => {
   const [cpassword, setCpassword] = useState("");
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log(data);
     if (data.email === "" || data.password === "") {
+      window.alert("input fiels cannot be empty");
       return;
     }
     if (data.password !== cpassword) {
@@ -33,8 +35,9 @@ const Login = () => {
       return;
     }
     dispatch({ type: USER_LOGIN_REQUEST });
+
     try {
-      const loggedUser = await axios.post("/api/auth/login", data);
+      const loggedUser = await axios.get("/api/auth/login", data);
       if (loggedUser.status === 200) {
         dispatch({ type: USER_LOGIN_SUCCESS, payload: loggedUser.data });
         sessionStorage.setItem("userInfo", JSON.stringify(loggedUser.data));
@@ -44,141 +47,149 @@ const Login = () => {
         dispatch({ type: USER_LOGIN_FAIL });
       }
     } catch (error) {
+      dispatch({ type: USER_LOGIN_FAIL });
       console.log("Error while logging in", error);
     }
   };
   return (
-    <div className="Main">
-      <div className="left">
-        <div className="left_wrapper">
-          <div className="left_top">
-            <div className="title">
-              <img src="/Icon.png" alt="" width="40px" height="40px" />
-              <h1>Webstar</h1>
-            </div>
-            <div className="text">
-              <h2>Create your next web page in no time</h2>
-            </div>
-          </div>
-
-          <div className="photo">
-            <img
-              src="/Main.png"
-              className="Main_img"
-              alt=""
-              width="200"
-              height="200"
-            />
-          </div>
+    <>
+      <div className="mobile_logo">
+        <div className="title">
+          <img src="/Icon.png" alt="" width="40px" height="40px" />
         </div>
       </div>
-      <div className="right">
-        <div className="title_right">
-          <div className="existing">
-            New to webstar?<Link to="/register"> register</Link>
+      <div className="Main">
+        <div className="left">
+          <div className="left_wrapper">
+            <div className="left_top">
+              <div className="title">
+                <img src="/Icon.png" alt="" width="40px" height="40px" />
+                <h1>Webstar</h1>
+              </div>
+              <div className="text">
+                <h2>Create your next web page in no time</h2>
+              </div>
+            </div>
+
+            <div className="photo">
+              <img
+                src="/Main.png"
+                className="Main_img"
+                alt=""
+                width="200"
+                height="200"
+              />
+            </div>
           </div>
         </div>
-        <div className="right_wrapper">
-          <div className="right_container">
-            <div className="heading">
-              <h1>Login to Webstar</h1>
+        <div className="right">
+          <div className="title_right">
+            <div className="existing">
+              New to webstar?<Link to="/register"> register</Link>
             </div>
-            <div className="content">
-              <form onSubmit={handleLogin}>
-                <div className="cred">
-                  <div className="email">
-                    <span>Email</span>
-                    <Input
-                      variant="filled"
-                      placeholder="Filled"
-                      onChange={(e) => {
-                        data.email = e.target.value;
-                        setData(data);
-                      }}
-                    />
-                  </div>
-                  <div className="email">
-                    <span>Password</span>
-                    <InputGroup size="md">
+          </div>
+          <div className="right_wrapper">
+            <div className="right_container">
+              <div className="heading">
+                <h1>Login to Webstar</h1>
+              </div>
+              <div className="content">
+                <form onSubmit={handleLogin}>
+                  <div className="cred">
+                    <div className="email">
+                      <span>Email</span>
                       <Input
-                        pr="4.5rem"
                         variant="filled"
-                        type={show ? "text" : "password"}
-                        placeholder="Enter password"
+                        placeholder="Filled"
                         onChange={(e) => {
-                          data.password = e.target.value;
+                          data.email = e.target.value;
                           setData(data);
                         }}
                       />
-                      <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                          {show ? "Hide" : "Show"}
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
+                    </div>
+                    <div className="email">
+                      <span>Password</span>
+                      <InputGroup size="md">
+                        <Input
+                          pr="4.5rem"
+                          variant="filled"
+                          type={show ? "text" : "password"}
+                          placeholder="Enter password"
+                          onChange={(e) => {
+                            data.password = e.target.value;
+                            setData(data);
+                          }}
+                        />
+                        <InputRightElement width="4.5rem">
+                          <Button h="1.75rem" size="sm" onClick={handleClick}>
+                            {show ? "Hide" : "Show"}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+                    </div>
+                    <div className="email">
+                      <span>Confirm Password</span>
+                      <InputGroup size="md">
+                        <Input
+                          pr="4.5rem"
+                          variant="filled"
+                          type={show ? "text" : "password"}
+                          placeholder="Enter password"
+                          onChange={(e) => {
+                            setCpassword(e.target.value);
+                          }}
+                        />
+                        <InputRightElement width="4.5rem">
+                          <Button h="1.75rem" size="sm" onClick={handleClick}>
+                            {show ? "Hide" : "Show"}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+                    </div>
                   </div>
-                  <div className="email">
-                    <span>Confirm Password</span>
-                    <InputGroup size="md">
-                      <Input
-                        pr="4.5rem"
-                        variant="filled"
-                        type={show ? "text" : "password"}
-                        placeholder="Enter password"
-                        onChange={(e) => {
-                          setCpassword(e.target.value);
-                        }}
-                      />
-                      <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                          {show ? "Hide" : "Show"}
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
+                  <div className="button">
+                    <Button
+                      colorScheme="teal"
+                      variant="outline"
+                      className="submit_btn"
+                      onClick={() => {
+                        console.log("clicked");
+                      }}
+                      type="Submit"
+                    >
+                      Login
+                    </Button>
                   </div>
-                </div>
-                <div className="button">
-                  <Button
-                    colorScheme="teal"
-                    variant="outline"
-                    className="submit_btn"
-                    onClick={() => {
-                      console.log("clicked");
-                    }}
-                    type="Submit"
-                  >
-                    Login
-                  </Button>
-                </div>
-              </form>
-            </div>
+                </form>
+              </div>
 
-            <div className="seperation">
-              <hr className="line" />
-              <span className="text-seperate">Or</span>
-            </div>
-            <div className="socials">
-              <Button
-                className="submit_btn"
-                leftIcon={<FaFacebook />}
-                colorScheme="teal"
-                variant="outline"
-              >
-                Sign up with Facebook
-              </Button>
-              <Button
-                className="google"
-                leftIcon={<FcGoogle />}
-                colorScheme="teal"
-                variant="outline"
-              >
-                Sign up with Google
-              </Button>
+              <div className="seperation">
+                <hr className="line" />
+                <span className="text-seperate">Or</span>
+              </div>
+              <div className="socials">
+                <Button
+                  className="submit_btn"
+                  leftIcon={<FaFacebook />}
+                  colorScheme="teal"
+                  variant="outline"
+                >
+                  Sign up with Facebook
+                </Button>
+                <Button
+                  className="google"
+                  leftIcon={<FcGoogle />}
+                  colorScheme="teal"
+                  variant="outline"
+                >
+                  Sign up with Google
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
