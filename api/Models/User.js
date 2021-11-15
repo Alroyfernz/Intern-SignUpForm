@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
       minLength: 6,
     },
     phoneNumber: {
-      type: String,
+      type: Number,
       required: true,
       minLength: 9,
     },

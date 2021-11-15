@@ -7,7 +7,8 @@ router.post("/register", async (req, res) => {
     const savedUSer = await newUser.save();
     res.status(200).json(savedUSer);
   } catch (error) {
-    res.status(404).json(error);
+    console.log(error);
+    res.status(404).json("error re");
   }
 });
 
@@ -15,7 +16,7 @@ router.get("/login", async (req, res) => {
   try {
     const fetchedUSer = await userSchema.findOne({
       email: req.body.email,
-      phone: req.body.phoneNumber,
+      phoneNumber: req.body.phoneNumber,
     });
     !fetchedUSer && res.status(500).json("You are not registered");
     res.status(200).json(fetchedUSer);
@@ -26,10 +27,12 @@ router.get("/login", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const user = await userSchema.findOne({
-      email: req.body.email,
-      phone: req.body.phoneNumber,
-    });
+    const user = await userSchema.findOne(
+      {
+        email: req.body.email,
+      } && { phoneNumber: req.body.phoneNumber }
+    );
+
     res.status(200).json(user);
   } catch (error) {
     res.status(404).json("You are not regustered");
