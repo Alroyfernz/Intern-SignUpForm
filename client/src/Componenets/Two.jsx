@@ -1,59 +1,45 @@
-import { Input } from "@chakra-ui/react";
-import React from "react";
+import { HStack, Input, Textarea } from "@chakra-ui/react";
+import { PinInput, PinInputField } from "@chakra-ui/react";
+
+import React, { useState } from "react";
 import "./Main.css";
 const Two = () => {
+  const [data, setData] = useState({});
+  var [pincode, setPincode] = useState("");
+  const handleUpdate = (e) => {
+    if (pincode.length <= 6) {
+      pincode += e.target.value;
+      setPincode(pincode);
+    }
+  };
+  console.log(pincode);
   return (
     <div>
       <div className="cred">
-        <div className="email">
-          <span>Email</span>
+        <div className="company_field">
+          <span>Company name</span>
           <Input
             variant="filled"
             placeholder="Filled"
-            onChange={(e) => {
-              data.email = e.target.value;
-              setData(data);
-            }}
+            onChange={handleUpdate}
           />
         </div>
-        <div className="email">
-          <span>Password</span>
-          <InputGroup size="md">
-            <Input
-              pr="4.5rem"
-              variant="filled"
-              type={show ? "text" : "password"}
-              placeholder="Enter password"
-              onChange={(e) => {
-                data.password = e.target.value;
-                setData(data);
-              }}
-            />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick}>
-                {show ? "Hide" : "Show"}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
+        <div className="address_field">
+          <span>Address</span>
+          <Textarea />
         </div>
-        <div className="email">
-          <span>Confirm Password</span>
-          <InputGroup size="md">
-            <Input
-              pr="4.5rem"
-              variant="filled"
-              type={show ? "text" : "password"}
-              placeholder="Enter password"
-              onChange={(e) => {
-                setCpassword(e.target.value);
-              }}
-            />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick}>
-                {show ? "Hide" : "Show"}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
+        <div className="pincode_field">
+          <span>Pincode</span>
+          <HStack>
+            <PinInput>
+              <PinInputField onChange={handleUpdate} />
+              <PinInputField onChange={handleUpdate} />
+              <PinInputField onChange={handleUpdate} />
+              <PinInputField onChange={handleUpdate} />
+              <PinInputField onChange={handleUpdate} />
+              <PinInputField onChange={handleUpdate} />
+            </PinInput>
+          </HStack>
         </div>
       </div>
     </div>

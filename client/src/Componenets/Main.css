@@ -17,6 +17,9 @@
     align-items: center;
    /* justify-content: space-between; */
 }
+.mobile_logo{
+    display: none;
+}
 .heading{
 display: flex;
 justify-content:flex-start;
@@ -108,6 +111,7 @@ justify-content: center;
 .existing{
     margin-right: 8%;
 }
+
 .title{
     display: flex;
     width: 100%;
@@ -131,6 +135,16 @@ justify-content: center;
     align-items: center;
     justify-content: flex-start;
 }
+.company_field{
+    margin-top: 10px;
+}
+.address_field{
+    margin-top: 10px;
+}
+.pincode_field{
+
+    margin-top: 10px;
+}
 .text>h2{
     width: 80%;
     color: #fff;
@@ -140,6 +154,34 @@ justify-content: center;
 @media screen and (max-width:600px) {
     .Main{
         width:80vw;
+    }
+    .mobile_logo{
+        display: flex;
+        width:auto;
+        height: auto;
+        background: rgb(181,247,255);
+        background: linear-gradient(41deg, rgba(181,247,255,1) 26%, rgba(65,100,247,1) 100%);
+        border-radius:100%;
+        position: fixed;
+        justify-content: center;
+        align-items: center;
+        top: 6%;
+    }
+.title_right{
+    margin-top: 25px;
+}
+.chakra-input__right-element>.chakra-button{
+    height: 20px !important;
+}
+    .chakra-button{
+        width: 100% !important;
+    }
+    .title{
+        margin: unset;
+    }
+    .title>img{
+        width: 60px;
+        height: 50px;
     }
     .heading{
         height: auto;
