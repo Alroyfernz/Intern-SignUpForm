@@ -35,3 +35,4 @@ router.get("/", async (req, res) => {
     res.status(404).json("You are not regustered");
   }
 });
+module.exports = router;
