@@ -1,6 +1,7 @@
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
@@ -25,7 +26,6 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (data.email === "" || data.password === "") {
-      window.alert("Input fields cannot be empty");
       return;
     }
     if (data.password !== cpassword) {

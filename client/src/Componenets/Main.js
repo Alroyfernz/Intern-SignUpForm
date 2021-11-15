@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { MdArrowForward } from "react-icons/md";
 import "./Main.css";
 
-import One from "./One";
 const Main = () => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
@@ -21,6 +20,13 @@ const Main = () => {
     pincode: 0,
   });
   const [cpassword, setCpassword] = useState("");
+  const handleRegitser = () => {
+    if (cpassword !== data.password) {
+      window.alert("passwords do not match");
+      return;
+    }
+  };
+  handleRegitser();
 
   return (
     <div className="Main">
