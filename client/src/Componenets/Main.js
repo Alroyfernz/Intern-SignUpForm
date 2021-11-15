@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Input,
@@ -22,6 +23,7 @@ import {
 import Slide from "@material-ui/core/Slide";
 import "./Main.css";
 import Two from "./Two";
+import axios from "axios";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -32,6 +34,7 @@ const Main = () => {
   const handleClick = () => setShow(!show);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef();
+  const navigate = useNavigate();
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -52,7 +55,7 @@ const Main = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleRegitser = () => {
+  const handleRegitser = async () => {
     if (cpassword !== data.password) {
       window.alert("passwords do not match");
       return;
@@ -60,14 +63,33 @@ const Main = () => {
     if (data.name === "") {
       window.alert("Input fields cannot be null");
     }
+    try {
+      const res = await axios.get("/api/auth/", {
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+      });
+      if (res.data !== null) {
+        onOpen;
+
+        return;
+      }
+    } catch (error) {
+      console.log("error while verifcation");
+    }
+    try {
+      const regUser = await axios.post("/api/auth/register", data);
+      if (regUser.status === 200) {
+        navigate("/login");
+      }
+    } catch (error) {}
   };
-  handleRegitser();
+  // handleRegitser();
 
   return (
     <>
-      <Button mt={4} onClick={onOpen}>
+      {/* <Button mt={4} onClick={onOpen}>
         Open Modal
-      </Button>
+      </Button> */}
       <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
