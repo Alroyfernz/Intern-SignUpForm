@@ -1,17 +1,52 @@
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { useDispatch } from "react-redux";
+import {
+  USER_LOGIN_FAIL,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+} from "../Redux/constants";
 import "./Main.css";
 const Login = () => {
   const [show, setShow] = React.useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleClick = () => setShow(!show);
   const [data, setData] = useState({
     email: "",
     password: "",
   });
   const [cpassword, setCpassword] = useState("");
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (data.email === "" || data.password === "") {
+      window.alert("Input fields cannot be empty");
+      return;
+    }
+    if (data.password !== cpassword) {
+      window.alert("Passwords do not match");
+      return;
+    }
+    dispatch({ type: USER_LOGIN_REQUEST });
+    try {
+      const loggedUser = await axios.post("/api/auth/login", data);
+      if (loggedUser.status === 200) {
+        dispatch({ type: USER_LOGIN_SUCCESS, payload: loggedUser.data });
+        sessionStorage.setItem("userInfo", JSON.stringify(loggedUser.data));
+        navigate("/");
+      } else {
+        window.alert("You are not registered");
+        dispatch({ type: USER_LOGIN_FAIL });
+      }
+    } catch (error) {
+      console.log("Error while logging in", error);
+    }
+  };
   return (
     <div className="Main">
       <div className="left">
@@ -49,68 +84,75 @@ const Login = () => {
               <h1>Login to Webstar</h1>
             </div>
             <div className="content">
-              <div className="cred">
-                <div className="email">
-                  <span>Email</span>
-                  <Input
-                    variant="filled"
-                    placeholder="Filled"
-                    onChange={(e) => {
-                      data.email = e.target.value;
-                      setData(data);
-                    }}
-                  />
-                </div>
-                <div className="email">
-                  <span>Password</span>
-                  <InputGroup size="md">
+              <form onSubmit={handleLogin}>
+                <div className="cred">
+                  <div className="email">
+                    <span>Email</span>
                     <Input
-                      pr="4.5rem"
                       variant="filled"
-                      type={show ? "text" : "password"}
-                      placeholder="Enter password"
+                      placeholder="Filled"
                       onChange={(e) => {
-                        data.password = e.target.value;
+                        data.email = e.target.value;
                         setData(data);
                       }}
                     />
-                    <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={handleClick}>
-                        {show ? "Hide" : "Show"}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
+                  </div>
+                  <div className="email">
+                    <span>Password</span>
+                    <InputGroup size="md">
+                      <Input
+                        pr="4.5rem"
+                        variant="filled"
+                        type={show ? "text" : "password"}
+                        placeholder="Enter password"
+                        onChange={(e) => {
+                          data.password = e.target.value;
+                          setData(data);
+                        }}
+                      />
+                      <InputRightElement width="4.5rem">
+                        <Button h="1.75rem" size="sm" onClick={handleClick}>
+                          {show ? "Hide" : "Show"}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
+                  </div>
+                  <div className="email">
+                    <span>Confirm Password</span>
+                    <InputGroup size="md">
+                      <Input
+                        pr="4.5rem"
+                        variant="filled"
+                        type={show ? "text" : "password"}
+                        placeholder="Enter password"
+                        onChange={(e) => {
+                          setCpassword(e.target.value);
+                        }}
+                      />
+                      <InputRightElement width="4.5rem">
+                        <Button h="1.75rem" size="sm" onClick={handleClick}>
+                          {show ? "Hide" : "Show"}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
+                  </div>
                 </div>
-                <div className="email">
-                  <span>Confirm Password</span>
-                  <InputGroup size="md">
-                    <Input
-                      pr="4.5rem"
-                      variant="filled"
-                      type={show ? "text" : "password"}
-                      placeholder="Enter password"
-                      onChange={(e) => {
-                        setCpassword(e.target.value);
-                      }}
-                    />
-                    <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={handleClick}>
-                        {show ? "Hide" : "Show"}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
+                <div className="button">
+                  <Button
+                    colorScheme="teal"
+                    variant="outline"
+                    className="submit_btn"
+                    onClick={() => {
+                      console.log("clicked");
+                    }}
+                    type="Submit"
+                  >
+                    Login
+                  </Button>
                 </div>
-              </div>
+              </form>
             </div>
-            <div className="button">
-              <Button
-                colorScheme="teal"
-                variant="outline"
-                className="submit_btn"
-              >
-                Login
-              </Button>
-            </div>
+
             <div className="seperation">
               <hr className="line" />
               <span className="text-seperate">Or</span>

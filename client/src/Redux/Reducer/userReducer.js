@@ -3,8 +3,7 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
-  USER_UPDATE,
-} from "../constaints.js";
+} from "../constants.js";
 const initialState = {
   userInfo: JSON.parse(sessionStorage.getItem("userInfo")) || null,
   isFetching: false,
