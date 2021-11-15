@@ -3,11 +3,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
 .Main{
     width: 60vw;
-    height: 80vh;
+    height: 90vh;
     background-color:white;
     border-radius:10px;
     display:flex;
 
+}
+.leftIcon{
+    color:#0093E9;
+  height: 25px;
+  width: 25px;
+    margin-right: 10px;
+}
+.leftIcon:hover{
+    cursor: pointer;
+}
+Input{
+    height: 35px !important; 
+}
+.chakra-button{
+    height: 30px !important;
+}
+.name{
+    margin-top: 10px;
+}
+.first_name{
+    margin-top: 8px;
+}
+.cred{
+    margin-top: 10px;
+}
+.cred>.email{
+    margin-top: 8px;
 }
 .right{
     font-family: 'Poppins', sans-serif;
@@ -46,6 +73,19 @@ height: auto;
 .google{
     margin-top: 8px;
     
+}
+
+.chakra-input__left-addon{
+    height: 35px !important;
+}
+.checkBox{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 70%;
+    color: gray;
+}
+.checkBox>.link{
+    color: rgb(71, 159, 231) !important;
 }
 .seperation{
     margin-top:5%;
@@ -155,6 +195,12 @@ justify-content: center;
     .Main{
         width:80vw;
     }
+    .checkBox{
+        width: 100%;
+    }
+    .chakra-input__left-addon{
+        height: 30px !important;
+    }
     .mobile_logo{
         display: flex;
         width:auto;
@@ -165,7 +211,7 @@ justify-content: center;
         position: fixed;
         justify-content: center;
         align-items: center;
-        top: 6%;
+        top: 1%;
     }
 .title_right{
     margin-top: 25px;
@@ -217,6 +263,16 @@ justify-content: center;
         align-items: center;
         justify-content: center;
     }
+    .HideS{
+        font-size: 13px;
+    }
+
+    ::-webkit-input-placeholder { 
+       font-size: 13px
+      }
+     ::placeholder{
+          font-size: 12px;
+      }
 }
 @media screen and (max-width:1100px) {
     Input{
