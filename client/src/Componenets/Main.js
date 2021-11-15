@@ -74,46 +74,49 @@ const Main = () => {
     e?.preventDefault();
     data.pincode = pincode;
     setData(data);
-    // console.log(data);
+    console.log(data);
     if (cpassword !== data.password) {
       window.alert("passwords do not match");
       return;
     }
     if (
       data.firstName === "" ||
-      data.lastName == "" ||
+      data.lastName === "" ||
       data.email === "" ||
       data.password === "" ||
-      data.phoneNumber === 0 ||
-      data.pincode === 0 ||
-      data.companyName === "" ||
-      data.address === ""
+      data.phoneNumber === 0
     ) {
       window.alert("Input fields cannot be null");
-      // setIsLast(false);
+
       return;
     }
-    //   try {
-    //     const res = await axios.get("/api/auth/", {
-    //       email: data.email,
-    //       phoneNumber: data.phoneNumber,
-    //     });
-    //     if (res.data !== null) {
-    //       onOpen();
+    if (isLast === false) {
+      return;
+    }
+    try {
+      const res = await axios.get("/api/auth/", {
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+      });
+      if (res.data !== null) {
+        onOpen();
 
-    //       return;
-    //     }
-    //   } catch (error) {
-    //     console.log("error while verifcation");
-    //   }
-    //   try {
-    //     const regUser = await axios.post("/api/auth/register", data);
-    //     if (regUser.status === 200) {
-    //       navigate("/login");
-    //     }
-    //   } catch (error) {
-    //     console.log("Error while registering");
-    //   }
+        return;
+      }
+    } catch (error) {
+      console.log("error while verifcation");
+    }
+    if (data.companyName === "") {
+      return;
+    }
+    try {
+      const regUser = await axios.post("/api/auth/register", data);
+      if (regUser.status === 200) {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log("Error while registering");
+    }
   };
   // // handleRegitser();
   const handlePUpdate = (e) => {
@@ -194,196 +197,223 @@ const Main = () => {
                 <form onSubmit={handleRegitser}>
                   <div>
                     {isLast === false ? (
-                      <div>
-                        <div className="name">
-                          <div className="first_name">
-                            <span className="HideS" className="HideS">
-                              Name
-                            </span>
-                            <Input
-                              variant="filled"
-                              placeholder="Filled"
-                              onChange={(e) => {
-                                data.firstName = e.target.value;
-                                setData(data);
-                              }}
-                            />
-                          </div>
-                          <div className="first_name">
-                            <span className="HideS">Name</span>
-                            <Input
-                              variant="filled"
-                              placeholder="Filled"
-                              onChange={(e) => {
-                                data.lastName = e.target.value;
-                                setData(data);
-                              }}
-                            />
-                          </div>
-                        </div>
-                        <div className="cred">
-                          <div className="email">
-                            <span className="HideS">Email</span>
-                            <Input
-                              variant="filled"
-                              placeholder="Filled"
-                              onChange={(e) => {
-                                data.email = e.target.value;
-                                setData(data);
-                              }}
-                            />
-                          </div>
-                          <div className="email">
-                            <span className="HideS">Phone number</span>
-                            <InputGroup>
-                              <InputLeftAddon children="+91" />
-                              <Input
-                                type="tel"
-                                placeholder="phone number"
-                                variant="filled"
-                                onChange={(e) => {
-                                  data.phoneNumber = e.target.value;
-                                  setData(data);
-                                }}
-                              />
-                            </InputGroup>
-                          </div>
-                          <div className="email">
-                            <span className="HideS">Password</span>
-                            <InputGroup size="md">
-                              <Input
-                                pr="4.5rem"
-                                variant="filled"
-                                type={show ? "text" : "password"}
-                                placeholder="Enter password"
-                                onChange={(e) => {
-                                  data.password = e.target.value;
-                                  setData(data);
-                                }}
-                              />
-                              <InputRightElement width="4.5rem">
-                                <Button
-                                  h="1.75rem"
-                                  size="sm"
-                                  onClick={handleClick}
-                                >
-                                  {show ? (
-                                    <span className="HideS">Hide</span>
-                                  ) : (
-                                    <span>Show</span>
-                                  )}
-                                </Button>
-                              </InputRightElement>
-                            </InputGroup>
-                          </div>
-                          <div className="email">
-                            <span className="HideS">Confirm Password</span>
-                            <InputGroup size="md">
-                              <Input
-                                pr="4.5rem"
-                                variant="filled"
-                                type={show ? "text" : "password"}
-                                placeholder="Enter password"
-                                onChange={(e) => {
-                                  setCpassword(e.target.value);
-                                }}
-                              />
-                              <InputRightElement width="4.5rem">
-                                <Button
-                                  h="1.75rem"
-                                  size="sm"
-                                  onClick={handleClick}
-                                >
-                                  {show ? (
-                                    <span className="HideS">Hide</span>
-                                  ) : (
-                                    <span>Show</span>
-                                  )}
-                                </Button>
-                              </InputRightElement>
-                            </InputGroup>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="cred">
-                        <div className="company_field">
-                          <span className="HideS">Company name</span>
-                          <Input
-                            variant="filled"
-                            placeholder="Filled"
-                            onChange={(e) => {
-                              data.companyName = e.target.value;
-                              setData(data);
-                            }}
-                          />
-                        </div>
-                        <div className="address_field">
-                          <span className="HideS">Address</span>
-                          <Textarea
-                            variant="filled"
-                            onChange={(e) => {
-                              data.address = e.target.value;
-                              setData(data);
-                            }}
-                          />
-                        </div>
-                        <div className="pincode_field">
-                          <span className="HideS">Pincode</span>
-                          <HStack>
-                            <PinInput>
-                              <PinInputField
-                                onChange={handlePUpdate}
-                                variant="filled"
-                              />
-                              <PinInputField
-                                onChange={handlePUpdate}
-                                variant="filled"
-                              />
-                              <PinInputField
-                                onChange={handlePUpdate}
-                                variant="filled"
-                              />
-                              <PinInputField
-                                onChange={handlePUpdate}
-                                variant="filled"
-                              />
-                              <PinInputField
-                                onChange={handlePUpdate}
-                                variant="filled"
-                              />
-                              <PinInputField
-                                onChange={handlePUpdate}
-                                variant="filled"
-                              />
-                            </PinInput>
-                          </HStack>
-                        </div>
+                      <>
                         <div>
-                          <Checkbox
-                            className="checkBox"
-                            ref={checkRef}
-                            onClick={setCheckBox(true)}
-                          >
-                            I accept the{" "}
-                            <span className="link"> Terms of Use</span> &{" "}
-                            <span className="link"> Privacy Policy</span>
-                          </Checkbox>
+                          <div className="name">
+                            <div className="first_name">
+                              <span className="HideS" className="HideS">
+                                Name
+                              </span>
+                              <Input
+                                variant="filled"
+                                placeholder="Filled"
+                                onChange={(e) => {
+                                  data.firstName = e.target.value;
+                                  setData(data);
+                                }}
+                              />
+                            </div>
+                            <div className="first_name">
+                              <span className="HideS">Name</span>
+                              <Input
+                                variant="filled"
+                                placeholder="Filled"
+                                onChange={(e) => {
+                                  data.lastName = e.target.value;
+                                  setData(data);
+                                }}
+                              />
+                            </div>
+                          </div>
+                          <div className="cred">
+                            <div className="email">
+                              <span className="HideS">Email</span>
+                              <Input
+                                variant="filled"
+                                placeholder="Filled"
+                                onChange={(e) => {
+                                  data.email = e.target.value;
+                                  setData(data);
+                                }}
+                              />
+                            </div>
+                            <div className="email">
+                              <span className="HideS">Phone number</span>
+                              <InputGroup>
+                                <InputLeftAddon children="+91" />
+                                <Input
+                                  type="tel"
+                                  placeholder="phone number"
+                                  variant="filled"
+                                  onChange={(e) => {
+                                    data.phoneNumber = e.target.value;
+                                    setData(data);
+                                  }}
+                                />
+                              </InputGroup>
+                            </div>
+                            <div className="email">
+                              <span className="HideS">Password</span>
+                              <InputGroup size="md">
+                                <Input
+                                  pr="4.5rem"
+                                  variant="filled"
+                                  type={show ? "text" : "password"}
+                                  placeholder="Enter password"
+                                  onChange={(e) => {
+                                    data.password = e.target.value;
+                                    setData(data);
+                                  }}
+                                />
+                                <InputRightElement width="4.5rem">
+                                  <Button
+                                    h="1.75rem"
+                                    size="sm"
+                                    onClick={handleClick}
+                                  >
+                                    {show ? (
+                                      <span className="HideS">Hide</span>
+                                    ) : (
+                                      <span>Show</span>
+                                    )}
+                                  </Button>
+                                </InputRightElement>
+                              </InputGroup>
+                            </div>
+                            <div className="email">
+                              <span className="HideS">Confirm Password</span>
+                              <InputGroup size="md">
+                                <Input
+                                  pr="4.5rem"
+                                  variant="filled"
+                                  type={show ? "text" : "password"}
+                                  placeholder="Enter password"
+                                  onChange={(e) => {
+                                    setCpassword(e.target.value);
+                                  }}
+                                />
+                                <InputRightElement width="4.5rem">
+                                  <Button
+                                    h="1.75rem"
+                                    size="sm"
+                                    onClick={handleClick}
+                                  >
+                                    {show ? (
+                                      <span className="HideS">Hide</span>
+                                    ) : (
+                                      <span>Show</span>
+                                    )}
+                                  </Button>
+                                </InputRightElement>
+                              </InputGroup>
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                        <div className="button">
+                          <Button
+                            rightIcon={<MdArrowForward />}
+                            colorScheme="teal"
+                            variant="outline"
+                            className="submit_btn"
+                            type="submit"
+                            onClick={() => {
+                              setIsLast(true);
+                              console.log("out out");
+                            }}
+                          >
+                            Next
+                          </Button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="cred">
+                          <div className="company_field">
+                            <span className="HideS">Company name</span>
+                            <Input
+                              variant="filled"
+                              placeholder="Filled"
+                              onChange={(e) => {
+                                data.companyName = e.target.value;
+                                setData(data);
+                              }}
+                            />
+                          </div>
+                          <div className="address_field">
+                            <span className="HideS">Address</span>
+                            <Textarea
+                              variant="filled"
+                              onChange={(e) => {
+                                data.address = e.target.value;
+                                setData(data);
+                              }}
+                            />
+                          </div>
+                          <div className="pincode_field">
+                            <span className="HideS">Pincode</span>
+                            <HStack>
+                              <PinInput>
+                                <PinInputField
+                                  onChange={handlePUpdate}
+                                  variant="filled"
+                                />
+                                <PinInputField
+                                  onChange={handlePUpdate}
+                                  variant="filled"
+                                />
+                                <PinInputField
+                                  onChange={handlePUpdate}
+                                  variant="filled"
+                                />
+                                <PinInputField
+                                  onChange={handlePUpdate}
+                                  variant="filled"
+                                />
+                                <PinInputField
+                                  onChange={handlePUpdate}
+                                  variant="filled"
+                                />
+                                <PinInputField
+                                  onChange={handlePUpdate}
+                                  variant="filled"
+                                />
+                              </PinInput>
+                            </HStack>
+                          </div>
+                          <div>
+                            <Checkbox
+                              className="checkBox"
+                              ref={checkRef}
+                              onClick={() => setCheckBox(true)}
+                            >
+                              I accept the{" "}
+                              <span className="link"> Terms of Use</span> &{" "}
+                              <span className="link"> Privacy Policy</span>
+                            </Checkbox>
+                          </div>
+                        </div>
+                        <div className="button">
+                          <Button
+                            rightIcon={<MdArrowForward />}
+                            colorScheme="teal"
+                            variant="outline"
+                            className="submit_btn"
+                            type="submit"
+                            onClick={() => {
+                              if (isLast) {
+                                handleRegitser();
+                                console.log("inin");
+                              } else {
+                                setIsLast(true);
+                                console.log("out out");
+                              }
+                            }}
+                          >
+                            {isLast === true ? "Register" : "Next"}
+                          </Button>
+                        </div>
+                      </>
                     )}
-                  </div>
-                  <div className="button">
-                    <Button
-                      rightIcon={<MdArrowForward />}
-                      colorScheme="teal"
-                      variant="outline"
-                      className="submit_btn"
-                      type="submit"
-                      onClick={() => setIsLast(true)}
-                    >
-                      {isLast === true ? "Register" : "Next"}
-                    </Button>
                   </div>
                 </form>
               </div>
