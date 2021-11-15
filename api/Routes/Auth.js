@@ -27,6 +27,7 @@ router.get("/login", async (req, res) => {
       res.status(404).send("wrong password");
     } else {
       res.status(200).json(fetchedUSer);
+      console.log(fetchedUSer);
     }
   } catch (error) {
     res.status(500).json("Error while registering");
@@ -35,15 +36,13 @@ router.get("/login", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const user = await userSchema.findOne(
-      {
-        email: req.body.email,
-      } && { phoneNumber: req.body.phoneNumber }
-    );
+    const user = await userSchema.findOne({
+      email: req.body.email,
+    });
 
     res.status(200).json(user);
   } catch (error) {
-    res.status(404).json("You are not regustered");
+    res.status(404).json("You are not registered");
   }
 });
 module.exports = router;

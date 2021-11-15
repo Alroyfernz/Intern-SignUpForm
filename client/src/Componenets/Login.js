@@ -164,7 +164,6 @@ const Login = () => {
               </div>
 
               <div className="seperation">
-                <hr className="line" />
                 <span className="text-seperate">Or</span>
               </div>
               <div className="socials">

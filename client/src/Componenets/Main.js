@@ -236,7 +236,7 @@ const Main = () => {
                               <InputGroup>
                                 <InputLeftAddon children="+91" />
                                 <Input
-                                  type="tel"
+                                  type="number"
                                   placeholder="phone number"
                                   variant="filled"
                                   onChange={(e) => {
